@@ -26,7 +26,7 @@ module.exports = React.createClass({
 						</div>
 						
 						<div>					
-							<input className = "registerInput" ref = "password" placeholder = "Password"></input>
+							<input className = "registerInput" ref = "password" placeholder = "Password" type = "password"></input>
 						</div>
 						<button className = "registerButton">Register</button>
 					</form>

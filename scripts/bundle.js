@@ -34199,7 +34199,7 @@ module.exports = React.createClass({
 					React.createElement(
 						'div',
 						null,
-						React.createElement('input', { className: 'loginInput', ref: 'password', placeholder: 'Password' })
+						React.createElement('input', { className: 'loginInput', ref: 'password', placeholder: 'Password', type: 'password' })
 					),
 					React.createElement(
 						'button',
@@ -34513,7 +34513,7 @@ module.exports = React.createClass({
 					React.createElement(
 						'div',
 						null,
-						React.createElement('input', { className: 'registerInput', ref: 'password', placeholder: 'Password' })
+						React.createElement('input', { className: 'registerInput', ref: 'password', placeholder: 'Password', type: 'password' })
 					),
 					React.createElement(
 						'button',

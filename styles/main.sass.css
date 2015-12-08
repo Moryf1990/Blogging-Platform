@@ -18,6 +18,42 @@
 .postComponent .postHeader2 {
   text-align: center; }
 
+#bs-example-navbar-collapse-1 {
+  background: blue; }
+
+.navbar-default .navbar-nav > li > a {
+  color: #fff; }
+
+.navbar-default .navbar-brand {
+  color: #fff; }
+
+div.navbar-header {
+  background: blue; }
+
+.navbar-default .navbar-toggle {
+  border-color: #fff; }
+
+.navbar-default .navbar-toggle .icon-bar {
+  background: #fff; }
+
+.navbar-default .navbar-nav > li > a:hover {
+  color: orange; }
+
+.navbar-default .navbar-brand:hover {
+  color: orange; }
+
+.navbar-default .navbar-toggle:hover {
+  background: orange; }
+
+.navbar-default .navbar-toggle:focus, .navbar-default .navbar-toggle:hover {
+  background: orange; }
+
+.navbar-default .navbar-nav > li > a:focus, .navbar-default .navbar-nav > li > a:hover {
+  color: orange; }
+
+.navbar-default .navbar-brand:focus, .navbar-default .navbar-brand:hover {
+  color: orange; }
+
 .registerComponent .registerHeader {
   text-align: center; }
 
