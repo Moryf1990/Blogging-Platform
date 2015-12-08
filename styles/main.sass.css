@@ -1,0 +1,31 @@
+.homeComponent div.homeLinks {
+  text-align: center; }
+
+.homeComponent a.homeContent {
+  padding-left: 1em; }
+
+.homeComponent .homeHeader {
+  text-align: center; }
+
+.postComponent .postInput {
+  margin-top: 1em; }
+
+.postComponent .postTextArea {
+  margin-top: 1em;
+  height: 20em;
+  width: 20em; }
+
+.postComponent .postHeader2 {
+  text-align: center; }
+
+.registerComponent .registerHeader {
+  text-align: center; }
+
+.registerComponent .registerInput {
+  margin-top: 1em; }
+
+.loginComponent .loginHeader {
+  text-align: center; }
+
+.loginComponent .loginInput {
+  margin-top: 1em; }
