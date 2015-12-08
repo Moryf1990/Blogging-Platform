@@ -47,7 +47,12 @@ var Router = Backbone.Router.extend({
 	},
 
 	post: function() {
-		ReactDOM.render(<PostComponent />, app);
+		if(Parse.User.current()) {
+			ReactDOM.render(<PostComponent router = {this} />, app);
+		}
+		else {
+			ReactDOM.render(<LoginComponent router = {this} />, app);
+		}
 	},
 
 	viewPosts: function() {

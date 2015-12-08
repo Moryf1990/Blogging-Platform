@@ -34393,11 +34393,25 @@ module.exports = React.createClass({
 var React = require('react');
 var ReactDOM = require('react-dom');
 var Backbone = require('backbone');
+var PostsModel = require('../models/PostsModel');
 
 module.exports = React.createClass({
 	displayName: 'exports',
 
+	getInitialState: function getInitialState() {
+		return { error: null };
+	},
+
 	render: function render() {
+		var errorElement = null;
+		if (this.state.error) {
+			errorElement = React.createElement(
+				'p',
+				{ className: 'red' },
+				this.state.error
+			);
+		}
+
 		return React.createElement(
 			'div',
 			{ className: 'col-sm-12' },
@@ -34409,6 +34423,7 @@ module.exports = React.createClass({
 					{ className: 'postHeader1' },
 					'This is where you can post about anything and everything.'
 				),
+				errorElement,
 				React.createElement(
 					'h3',
 					{ className: 'postHeader2' },
@@ -34417,29 +34432,56 @@ module.exports = React.createClass({
 				React.createElement(
 					'div',
 					null,
-					React.createElement('input', { className: 'postInput', placeholder: 'Title' })
+					React.createElement('input', { className: 'postInput', placeholder: 'Title', ref: 'Title' })
 				),
 				React.createElement(
 					'div',
 					null,
-					React.createElement('input', { className: 'postInput', placeholder: 'Category' })
+					React.createElement('input', { className: 'postInput', placeholder: 'Category', ref: 'Category' })
 				),
 				React.createElement(
 					'div',
 					null,
-					React.createElement('textarea', { className: 'postTextArea', placeholder: 'Body' })
+					React.createElement('textarea', { className: 'postTextArea', placeholder: 'Body', ref: 'Body' })
 				),
 				React.createElement(
-					'button',
-					{ id: 'postButton' },
-					'Submit'
+					'div',
+					null,
+					React.createElement(
+						'button',
+						{ onClick: this.onNewPost, id: 'postButton' },
+						'Submit'
+					)
 				)
 			)
 		);
+	},
+
+	onNewPost: function onNewPost(e) {
+		var _this = this;
+
+		e.preventDefault();
+		// var newPost = new PostsModel({
+		var newPost = new PostsModel();
+		newPost.set('Title', this.refs.Title.value);
+		newPost.set('Category', this.refs.Category.value);
+		newPost.set('Body', this.refs.Body.value);
+		newPost.save({
+			success: function success(u) {
+				_this.props.router.navigate('viewPosts', { trigger: true });
+			}
+		});
+		// Title: this.refs.Title.value,
+		// Category: this.refs.Category.value,
+		// Body: this.refs.Body.value
+		// });
+
+		// newPost.save();
+		// this.props.router.navigate('viewPosts', {trigger: true});
 	}
 });
 
-},{"backbone":1,"react":174,"react-dom":18}],179:[function(require,module,exports){
+},{"../models/PostsModel":184,"backbone":1,"react":174,"react-dom":18}],179:[function(require,module,exports){
 'use strict';
 
 var React = require('react');
@@ -34552,11 +34594,36 @@ module.exports = React.createClass({
 var React = require('react');
 var ReactDOM = require('react-dom');
 var Backbone = require('backbone');
+var PostsModel = require('../models/PostsModel');
+var ViewPostsRowComponent = require('./ViewPostsRowComponent');
 
 module.exports = React.createClass({
 	displayName: 'exports',
 
+	getInitialState: function getInitialState() {
+		return { 'posts': [] };
+	},
+
+	componentWillMount: function componentWillMount(e) {
+		var _this = this;
+
+		var postsQuery = new Parse.Query(PostsModel);
+		postsQuery.descending('createdAt').find().then(function (posts) {
+			_this.setState({ posts: posts });
+		});
+	},
+
 	render: function render() {
+		var allPosts = this.state.posts.map(function (post) {
+			var prefix = '#viewPosts';
+			var url = prefix + post.id;
+			return React.createElement(
+				'a',
+				{ className: 'postLink', href: url, key: post.id },
+				React.createElement(ViewPostsRowComponent, { post: post })
+			);
+		});
+
 		return React.createElement(
 			'div',
 			{ className: 'col-sm-12' },
@@ -34572,13 +34639,41 @@ module.exports = React.createClass({
 					'h3',
 					{ className: 'viewPostsHeader2' },
 					'The most recent ones are at the top. Click on any of them to be taken to the post.'
+				),
+				React.createElement(
+					'div',
+					{ className: 'viewPostsList' },
+					allPosts
 				)
 			)
 		);
 	}
 });
 
-},{"backbone":1,"react":174,"react-dom":18}],182:[function(require,module,exports){
+},{"../models/PostsModel":184,"./ViewPostsRowComponent":182,"backbone":1,"react":174,"react-dom":18}],182:[function(require,module,exports){
+'use strict';
+
+var React = require('react');
+var ViewPostsComponent = require('./ViewPostsComponent');
+var ReactDOM = require('react-dom');
+
+module.exports = React.createClass({
+	displayName: 'exports',
+
+	render: function render() {
+		return React.createElement(
+			'section',
+			null,
+			React.createElement(
+				'div',
+				{ className: 'viewPostsList' },
+				this.props.post.get('Title')
+			)
+		);
+	}
+});
+
+},{"./ViewPostsComponent":181,"react":174,"react-dom":18}],183:[function(require,module,exports){
 'use strict';
 var React = require('react');
 var ReactDOM = require('react-dom');
@@ -34628,7 +34723,11 @@ var Router = Backbone.Router.extend({
 	},
 
 	post: function post() {
-		ReactDOM.render(React.createElement(PostComponent, null), app);
+		if (Parse.User.current()) {
+			ReactDOM.render(React.createElement(PostComponent, { router: this }), app);
+		} else {
+			ReactDOM.render(React.createElement(LoginComponent, { router: this }), app);
+		}
 	},
 
 	viewPosts: function viewPosts() {
@@ -34645,7 +34744,14 @@ Backbone.history.start();
 
 ReactDOM.render(React.createElement(NavigationComponent, { router: r }), document.getElementById('nav'));
 
-},{"./components/HomeComponent":175,"./components/LoginComponent":176,"./components/NavigationComponent":177,"./components/PostComponent":178,"./components/PostsComponent":179,"./components/RegisterComponent":180,"./components/ViewPostsComponent":181,"backbone":1,"bootstrap":3,"jquery":17,"react":174,"react-dom":18}]},{},[182])
+},{"./components/HomeComponent":175,"./components/LoginComponent":176,"./components/NavigationComponent":177,"./components/PostComponent":178,"./components/PostsComponent":179,"./components/RegisterComponent":180,"./components/ViewPostsComponent":181,"backbone":1,"bootstrap":3,"jquery":17,"react":174,"react-dom":18}],184:[function(require,module,exports){
+'use strict';
+
+module.exports = Parse.Object.extend({
+	className: 'Posts'
+});
+
+},{}]},{},[183])
 
 
 //# sourceMappingURL=bundle.js.map
