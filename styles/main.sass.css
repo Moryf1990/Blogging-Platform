@@ -1,11 +1,15 @@
-.homeComponent div.homeLinks {
-  text-align: center; }
-
-.homeComponent a.homeContent {
-  padding-left: 1em; }
-
-.homeComponent .homeHeader {
-  text-align: center; }
+body {
+  background: teal; }
+  body div.homeLinks {
+    text-align: center; }
+  body a.homeContent {
+    padding-left: 1em;
+    color: #fff; }
+  body a.homeContent:hover {
+    color: orange; }
+  body .homeHeader {
+    text-align: center;
+    color: #fff; }
 
 .postComponent .postInput {
   margin-top: 1em; }
@@ -15,8 +19,35 @@
   height: 20em;
   width: 20em; }
 
+.postComponent .postHeader1 {
+  color: #fff; }
+
 .postComponent .postHeader2 {
-  text-align: center; }
+  text-align: center;
+  color: #fff; }
+
+.postComponent .postSelect {
+  margin-top: 1em;
+  width: 11em; }
+
+.postComponent #postButton {
+  background: yellow;
+  color: green;
+  font-weight: bold;
+  border: none;
+  margin-top: 1em;
+  -webkit-border-radius: 0.5em;
+  width: 10em; }
+
+.postComponent #postButton:hover {
+  color: #fff;
+  background: blue; }
+
+.postComponent select.postSelect {
+  -webkit-appearance: none;
+  -webkit-border-radius: 0em;
+  color: #A9A9A9;
+  line-height: 1.75; }
 
 #bs-example-navbar-collapse-1 {
   background: blue; }
@@ -54,14 +85,74 @@ div.navbar-header {
 .navbar-default .navbar-brand:focus, .navbar-default .navbar-brand:hover {
   color: orange; }
 
-.registerComponent .registerHeader {
+.postsList {
+  margin-bottom: 1em; }
+
+.postsHeader1 {
+  color: #fff;
+  text-align: center;
+  margin-bottom: 2em; }
+
+a.postsList {
+  color: #fff;
   text-align: center; }
+
+a.postsList:hover {
+  color: orange;
+  text-decoration: none; }
+
+.viewPostsComponent div.viewPostsList {
+  color: #fff;
+  text-align: center; }
+
+.viewPostsComponent div.viewPostsList:hover {
+  color: orange; }
+
+.viewPostsComponent .viewPostsHeader1 {
+  color: #fff;
+  text-align: center; }
+
+.viewPostsComponent .viewPostsHeader2 {
+  color: #fff;
+  text-align: center;
+  margin-bottom: 2em; }
+
+.registerComponent .registerHeader {
+  text-align: center;
+  color: #fff; }
 
 .registerComponent .registerInput {
   margin-top: 1em; }
 
+.registerComponent .registerButton {
+  background: yellow;
+  color: green;
+  font-weight: bold;
+  border: none;
+  margin-top: 1em;
+  -webkit-border-radius: 0.5em;
+  width: 10em; }
+
+.registerComponent .registerButton:hover {
+  color: #fff;
+  background: blue; }
+
 .loginComponent .loginHeader {
-  text-align: center; }
+  text-align: center;
+  color: #fff; }
 
 .loginComponent .loginInput {
   margin-top: 1em; }
+
+.loginComponent .loginButton {
+  background: yellow;
+  color: green;
+  font-weight: bold;
+  border: none;
+  margin-top: 1em;
+  -webkit-border-radius: 0.5em;
+  width: 10em; }
+
+.loginComponent .loginButton:hover {
+  color: #fff;
+  background: blue; }

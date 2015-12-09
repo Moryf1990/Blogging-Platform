@@ -56,11 +56,11 @@ var Router = Backbone.Router.extend({
 	},
 
 	viewPosts: function() {
-		ReactDOM.render(<ViewPostsComponent />, app);
+		ReactDOM.render(<ViewPostsComponent router = {this} />, app);
 	},
 
 	posts: function() {
-		ReactDOM.render(<PostsComponent />, app);
+		ReactDOM.render(<PostsComponent router = {this} />, app);
 	}
 });
 

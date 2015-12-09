@@ -27,7 +27,13 @@ module.exports = React.createClass({
 						</div>
 
 						<div>
-							<input className = "postInput" placeholder = "Category" ref = "Category"></input>
+							<select className = "postSelect" placeholder = "Category" ref = "Category">
+								<option value = "" disabled selected>Category</option>
+								<option value = "Sports">Sports</option>
+								<option value = "Pets">Pets</option>
+								<option value = "Food">Food</option>
+								<option value = "Other">Other</option>
+							</select>
 						</div>
 
 						<div>
@@ -44,7 +50,6 @@ module.exports = React.createClass({
 
 	onNewPost: function(e) {
 		e.preventDefault();
-		// var newPost = new PostsModel({
 			var newPost = new PostsModel();
 			newPost.set('Title', this.refs.Title.value);
 			newPost.set('Category', this.refs.Category.value);
@@ -54,12 +59,5 @@ module.exports = React.createClass({
 					this.props.router.navigate('viewPosts', {trigger: true});
 				}
 			});
-			// Title: this.refs.Title.value,
-			// Category: this.refs.Category.value,
-			// Body: this.refs.Body.value
-		// });
-
-		// newPost.save();
-		// this.props.router.navigate('viewPosts', {trigger: true});
 	}
 });

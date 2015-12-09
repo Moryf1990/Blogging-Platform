@@ -10,4 +10,4 @@ module.exports = React.createClass({
 			</section>
 		);
 	}
-})
+});

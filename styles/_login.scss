@@ -2,9 +2,25 @@
 
 	.loginHeader {
 		text-align: center;
+		color: #fff;
 	}
 
 	.loginInput {
 		margin-top: 1em;
+	}
+
+	.loginButton {
+		background: yellow;
+		color: green;
+		font-weight: bold;
+		border: none;
+		margin-top: 1em;
+		-webkit-border-radius: 0.5em;
+		width: 10em;
+	}
+
+	.loginButton:hover {
+		color: #fff;
+		background: blue;
 	}
 }

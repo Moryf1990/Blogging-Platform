@@ -2,9 +2,26 @@
 
 	.registerHeader {
 		text-align: center;
+		color: #fff;
 	}
 
 	.registerInput {
 		margin-top: 1em;
+	}
+
+	.registerButton {
+		background: yellow;
+		color: green;
+		font-weight: bold;
+		border: none;
+		margin-top: 1em;
+		-webkit-border-radius: 0.5em;
+		width: 10em;
+
+	}
+
+	.registerButton:hover {
+		color: #fff;
+		background: blue;
 	}
 }

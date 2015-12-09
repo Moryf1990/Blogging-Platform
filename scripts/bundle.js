@@ -34123,28 +34123,32 @@ module.exports = React.createClass({
 
 	render: function render() {
 		return React.createElement(
-			'div',
-			{ className: 'col-sm-12' },
+			'body',
+			null,
 			React.createElement(
 				'div',
-				{ className: 'homeComponent' },
-				React.createElement(
-					'h1',
-					{ className: 'homeHeader' },
-					'Welcome to my Blogging Platform'
-				),
+				{ className: 'col-sm-12' },
 				React.createElement(
 					'div',
-					{ className: 'homeLinks' },
+					{ className: 'homeComponent' },
 					React.createElement(
-						'a',
-						{ className: 'homeContent', href: '#register' },
-						'REGISTER'
+						'h1',
+						{ className: 'homeHeader' },
+						'Welcome to my Blogging Platform'
 					),
 					React.createElement(
-						'a',
-						{ className: 'homeContent', href: '#login' },
-						'LOGIN'
+						'div',
+						{ className: 'homeLinks' },
+						React.createElement(
+							'a',
+							{ className: 'homeContent', href: '#register' },
+							'REGISTER'
+						),
+						React.createElement(
+							'a',
+							{ className: 'homeContent', href: '#login' },
+							'LOGIN'
+						)
 					)
 				)
 			)
@@ -34437,7 +34441,35 @@ module.exports = React.createClass({
 				React.createElement(
 					'div',
 					null,
-					React.createElement('input', { className: 'postInput', placeholder: 'Category', ref: 'Category' })
+					React.createElement(
+						'select',
+						{ className: 'postSelect', placeholder: 'Category', ref: 'Category' },
+						React.createElement(
+							'option',
+							{ value: '', disabled: true, selected: true },
+							'Category'
+						),
+						React.createElement(
+							'option',
+							{ value: 'Sports' },
+							'Sports'
+						),
+						React.createElement(
+							'option',
+							{ value: 'Pets' },
+							'Pets'
+						),
+						React.createElement(
+							'option',
+							{ value: 'Food' },
+							'Food'
+						),
+						React.createElement(
+							'option',
+							{ value: 'Other' },
+							'Other'
+						)
+					)
 				),
 				React.createElement(
 					'div',
@@ -34461,7 +34493,6 @@ module.exports = React.createClass({
 		var _this = this;
 
 		e.preventDefault();
-		// var newPost = new PostsModel({
 		var newPost = new PostsModel();
 		newPost.set('Title', this.refs.Title.value);
 		newPost.set('Category', this.refs.Category.value);
@@ -34471,27 +34502,45 @@ module.exports = React.createClass({
 				_this.props.router.navigate('viewPosts', { trigger: true });
 			}
 		});
-		// Title: this.refs.Title.value,
-		// Category: this.refs.Category.value,
-		// Body: this.refs.Body.value
-		// });
-
-		// newPost.save();
-		// this.props.router.navigate('viewPosts', {trigger: true});
 	}
 });
 
-},{"../models/PostsModel":184,"backbone":1,"react":174,"react-dom":18}],179:[function(require,module,exports){
+},{"../models/PostsModel":185,"backbone":1,"react":174,"react-dom":18}],179:[function(require,module,exports){
 'use strict';
 
 var React = require('react');
 var ReactDOM = require('react-dom');
 var Backbone = require('backbone');
+var PostsModel = require('../models/PostsModel');
+var PostsRowComponent = require('./PostsRowComponent');
 
 module.exports = React.createClass({
 	displayName: 'exports',
 
+	getInitialState: function getInitialState() {
+		return { 'posts': [] };
+	},
+
+	componentWillMount: function componentWillMount(e) {
+		var _this = this;
+
+		var postsQuery = new Parse.Query(PostsModel);
+		postsQuery.descending('createdAt').find().then(function (posts) {
+			_this.setState({ posts: posts });
+		});
+	},
+
 	render: function render() {
+		var allPosts = this.state.posts.map(function (post) {
+			var prefix = '#posts';
+			var url = prefix + post.id;
+			return React.createElement(
+				'a',
+				{ className: 'postsList', href: url, key: post.id },
+				React.createElement(PostsRowComponent, { post: post })
+			);
+		});
+
 		return React.createElement(
 			'div',
 			{ className: 'col-sm-12' },
@@ -34503,12 +34552,50 @@ module.exports = React.createClass({
 					{ className: 'postsHeader1' },
 					'These are all of the posts.'
 				)
+			),
+			React.createElement(
+				'div',
+				{ clasName: 'postsList' },
+				allPosts
 			)
 		);
 	}
 });
 
-},{"backbone":1,"react":174,"react-dom":18}],180:[function(require,module,exports){
+},{"../models/PostsModel":185,"./PostsRowComponent":180,"backbone":1,"react":174,"react-dom":18}],180:[function(require,module,exports){
+'use strict';
+
+var React = require('react');
+var PostsComponent = require('./PostsComponent');
+var ReactDOM = require('react-dom');
+
+module.exports = React.createClass({
+	displayName: 'exports',
+
+	render: function render() {
+		return React.createElement(
+			'section',
+			null,
+			React.createElement(
+				'div',
+				null,
+				this.props.post.get('Title')
+			),
+			React.createElement(
+				'div',
+				null,
+				this.props.post.get('Category')
+			),
+			React.createElement(
+				'div',
+				{ className: 'postsList' },
+				this.props.post.get('Body')
+			)
+		);
+	}
+});
+
+},{"./PostsComponent":179,"react":174,"react-dom":18}],181:[function(require,module,exports){
 'use strict';
 
 var React = require('react');
@@ -34588,7 +34675,7 @@ module.exports = React.createClass({
 	}
 });
 
-},{"backbone":1,"react":174,"react-dom":18}],181:[function(require,module,exports){
+},{"backbone":1,"react":174,"react-dom":18}],182:[function(require,module,exports){
 'use strict';
 
 var React = require('react');
@@ -34642,15 +34729,24 @@ module.exports = React.createClass({
 				),
 				React.createElement(
 					'div',
-					{ className: 'viewPostsList' },
+					{ className: 'viewPostsList', onClick: this.onPostClicked },
 					allPosts
 				)
 			)
 		);
+	},
+
+	onPostClicked: function onPostClicked(e) {
+		var _this2 = this;
+
+		e.preventDefault();
+		success: (function (u) {
+			_this2.props.router.navigate('posts', { trigger: true });
+		});
 	}
 });
 
-},{"../models/PostsModel":184,"./ViewPostsRowComponent":182,"backbone":1,"react":174,"react-dom":18}],182:[function(require,module,exports){
+},{"../models/PostsModel":185,"./ViewPostsRowComponent":183,"backbone":1,"react":174,"react-dom":18}],183:[function(require,module,exports){
 'use strict';
 
 var React = require('react');
@@ -34673,7 +34769,7 @@ module.exports = React.createClass({
 	}
 });
 
-},{"./ViewPostsComponent":181,"react":174,"react-dom":18}],183:[function(require,module,exports){
+},{"./ViewPostsComponent":182,"react":174,"react-dom":18}],184:[function(require,module,exports){
 'use strict';
 var React = require('react');
 var ReactDOM = require('react-dom');
@@ -34731,11 +34827,11 @@ var Router = Backbone.Router.extend({
 	},
 
 	viewPosts: function viewPosts() {
-		ReactDOM.render(React.createElement(ViewPostsComponent, null), app);
+		ReactDOM.render(React.createElement(ViewPostsComponent, { router: this }), app);
 	},
 
 	posts: function posts() {
-		ReactDOM.render(React.createElement(PostsComponent, null), app);
+		ReactDOM.render(React.createElement(PostsComponent, { router: this }), app);
 	}
 });
 
@@ -34744,14 +34840,14 @@ Backbone.history.start();
 
 ReactDOM.render(React.createElement(NavigationComponent, { router: r }), document.getElementById('nav'));
 
-},{"./components/HomeComponent":175,"./components/LoginComponent":176,"./components/NavigationComponent":177,"./components/PostComponent":178,"./components/PostsComponent":179,"./components/RegisterComponent":180,"./components/ViewPostsComponent":181,"backbone":1,"bootstrap":3,"jquery":17,"react":174,"react-dom":18}],184:[function(require,module,exports){
+},{"./components/HomeComponent":175,"./components/LoginComponent":176,"./components/NavigationComponent":177,"./components/PostComponent":178,"./components/PostsComponent":179,"./components/RegisterComponent":181,"./components/ViewPostsComponent":182,"backbone":1,"bootstrap":3,"jquery":17,"react":174,"react-dom":18}],185:[function(require,module,exports){
 'use strict';
 
 module.exports = Parse.Object.extend({
 	className: 'Posts'
 });
 
-},{}]},{},[183])
+},{}]},{},[184])
 
 
 //# sourceMappingURL=bundle.js.map

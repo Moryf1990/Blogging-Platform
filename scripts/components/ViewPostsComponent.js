@@ -21,7 +21,7 @@ module.exports = React.createClass({
 	render: function() {
 		var allPosts = this.state.posts.map(function(post) {
 			var prefix = '#viewPosts';
-			var url = prefix+post.id;
+			var url = prefix + post.id;
 			return <a className = "postLink" href = {url} key = {post.id}><ViewPostsRowComponent post = {post}/></a>
 		});
 
@@ -30,11 +30,18 @@ module.exports = React.createClass({
 				<div className = "viewPostsComponent">
 					<h1 className = "viewPostsHeader1">These are all of the posts.</h1>
 					<h3 className = "viewPostsHeader2">The most recent ones are at the top. Click on any of them to be taken to the post.</h3>
-					<div className = "viewPostsList">
-					{allPosts}
+					<div className = "viewPostsList" onClick = {this.onPostClicked}>
+					{allPosts} 
 					</div>
 				</div>
 			</div>
 		);
-	}
+	},
+
+	onPostClicked: function(e) {
+		e.preventDefault();
+			success: (u) => {
+				this.props.router.navigate('posts', {trigger: true});
+			}
+	} 
 });

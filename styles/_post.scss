@@ -10,7 +10,39 @@
 		width: 20em;
 	}
 
+	.postHeader1 {
+		color: #fff;
+	}
+
 	.postHeader2 {
 		text-align: center;
+		color: #fff;
+	}
+
+	.postSelect {
+		margin-top: 1em;
+		width: 11em;
+	}
+
+	#postButton {
+		background: yellow;
+		color: green;
+		font-weight: bold;
+		border: none;
+		margin-top: 1em;
+		-webkit-border-radius: 0.5em;
+		width: 10em;
+	}
+
+	#postButton:hover {
+		color: #fff;
+		background: blue;
+	}
+
+	select.postSelect {
+		-webkit-appearance: none;
+		-webkit-border-radius: 0em;
+		color: #A9A9A9;
+		line-height: 1.75;
 	}
 }

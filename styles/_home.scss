@@ -1,4 +1,5 @@
-.homeComponent {
+body {
+	background: teal;
 
 	div.homeLinks {
 		text-align: center;
@@ -6,9 +7,15 @@
 
 	a.homeContent {
 		padding-left: 1em;
+		color: #fff;
+	}
+
+	a.homeContent:hover {
+		color: orange;
 	}
 
 	.homeHeader {
 		text-align: center;
+		color: #fff;
 	}
 }
