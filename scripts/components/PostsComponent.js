@@ -22,7 +22,9 @@ module.exports = React.createClass({
 		var allPosts = this.state.posts.map(function(post) {
 			var prefix = '#posts';
 			var url = prefix + post.id;
-			return <a className = "postsList" href = {url} key = {post.id}><PostsRowComponent post = {post}/></a>
+			var datePosted = `${post.get('createdAt')}`;
+			return <a className = "postsList" href = {url} key = {post.id}><PostsRowComponent post = {post}/>
+				   <span>{datePosted}</span></a>
 		});
 
 		return(
@@ -37,3 +39,4 @@ module.exports = React.createClass({
 		);
 	}
 });
+

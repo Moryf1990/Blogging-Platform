@@ -19,7 +19,7 @@ module.exports = React.createClass({
 		return(
 			<div className = "col-sm-12">
 				<div className = "postComponent">
-					<h1 className = "postHeader1">This is where you can post about anything and everything.</h1>
+					<h1 className = "postHeader1">This is where you can post about what's on your mind.</h1>
 					{errorElement}
 					<h3 className = "postHeader2">Click the submit button when you are done.</h3>
 						<div>

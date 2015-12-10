@@ -34425,7 +34425,7 @@ module.exports = React.createClass({
 				React.createElement(
 					'h1',
 					{ className: 'postHeader1' },
-					'This is where you can post about anything and everything.'
+					'This is where you can post about what\'s on your mind.'
 				),
 				errorElement,
 				React.createElement(
@@ -34534,10 +34534,16 @@ module.exports = React.createClass({
 		var allPosts = this.state.posts.map(function (post) {
 			var prefix = '#posts';
 			var url = prefix + post.id;
+			var datePosted = '' + post.get('createdAt');
 			return React.createElement(
 				'a',
 				{ className: 'postsList', href: url, key: post.id },
-				React.createElement(PostsRowComponent, { post: post })
+				React.createElement(PostsRowComponent, { post: post }),
+				React.createElement(
+					'span',
+					null,
+					datePosted
+				)
 			);
 		});
 

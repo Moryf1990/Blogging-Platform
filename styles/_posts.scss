@@ -1,7 +1,3 @@
-.postsList {
-	margin-bottom: 1em;
-}
-
 .postsHeader1 {
 	color: #fff;
 	text-align: center;
@@ -16,4 +12,11 @@ a.postsList {
 a.postsList:hover {
 	color: orange;
 	text-decoration: none;
+}
+
+span {
+	margin: 0 auto;
+	display: block;
+	text-align: center;
+	padding-bottom: 2em;
 }
