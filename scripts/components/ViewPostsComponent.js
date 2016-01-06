@@ -20,17 +20,19 @@ module.exports = React.createClass({
 
 	render: function() {
 		var allPosts = this.state.posts.map(function(post) {
-			var prefix = '#viewPosts';
+			var prefix = '#posts/';
 			var url = prefix + post.id;
-			return <a className = "postLink" href = {url} key = {post.id}><ViewPostsRowComponent post = {post}/></a>
+			var datePosted = `${post.get('createdAt')}`;
+			return <a className = "postLink" href = {url} key = {post.id}><ViewPostsRowComponent post = {post}/>
+			       <form>{datePosted}</form></a>
 		});
 
 		return(
 			<div className = "col-sm-12">
 				<div className = "viewPostsComponent">
 					<h1 className = "viewPostsHeader1">These are all of the posts.</h1>
-					<h3 className = "viewPostsHeader2">The most recent ones are at the top. Click on any of them to be taken to the post.</h3>
-					<div className = "viewPostsList" onClick = {this.onPostClicked}>
+					<h3 className = "viewPostsHeader2">The most recent ones are at the top. Click on any of them to be taken to the full post.</h3>
+					<div className = "postLink">
 					{allPosts} 
 					</div>
 				</div>
@@ -38,10 +40,17 @@ module.exports = React.createClass({
 		);
 	},
 
-	onPostClicked: function(e) {
-		e.preventDefault();
-			success: (u) => {
-				this.props.router.navigate('posts', {trigger: true});
-			}
-	} 
 });
+
+
+
+
+
+
+
+
+
+
+
+
+

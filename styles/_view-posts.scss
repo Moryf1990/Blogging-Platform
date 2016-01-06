@@ -1,12 +1,7 @@
 .viewPostsComponent {
 
 	div.viewPostsList {
-		color: #fff;
 		text-align: center;
-	}
-
-	div.viewPostsList:hover {
-		color: orange;
 	}
 
 	.viewPostsHeader1 {
@@ -18,5 +13,18 @@
 		color: #fff;
 		text-align: center;
 		margin-bottom: 2em;
+	}
+
+	// form {
+	// 	color: #fff;
+	// }
+
+	a.postLink {
+		color: #fff;
+	}
+
+	a.postLink:hover {
+		color: orange;
+		text-decoration: none;
 	}
 }

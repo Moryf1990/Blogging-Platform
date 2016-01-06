@@ -9,14 +9,20 @@ a.postsList {
 	text-align: center;
 }
 
-a.postsList:hover {
-	color: orange;
-	text-decoration: none;
-}
+// a.postsList:hover {
+// 	color: orange;
+// 	text-decoration: none;
+// }
 
-span {
+form {
 	margin: 0 auto;
 	display: block;
 	text-align: center;
-	padding-bottom: 2em;
+	margin-bottom: 2em;
+	color: orange;
+}
+
+section {
+	text-align: center;
+	color: orange;
 }

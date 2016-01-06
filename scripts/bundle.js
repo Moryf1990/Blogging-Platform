@@ -34279,15 +34279,7 @@ module.exports = React.createClass({
 					'VIEWPOSTS'
 				)
 			));
-			links.push(React.createElement(
-				'li',
-				{ className: 'navList', key: 'navList6' },
-				React.createElement(
-					'a',
-					{ href: '#posts' },
-					'POSTS'
-				)
-			));
+			// links.push(<li className = "navList" key = {'navList6'}><a href = "#posts">POSTS</a></li>);
 			links.push(React.createElement(
 				'li',
 				{ className: 'navList', key: 'navList7' },
@@ -34343,15 +34335,7 @@ module.exports = React.createClass({
 					'VIEWPOSTS'
 				)
 			));
-			links.push(React.createElement(
-				'li',
-				{ className: 'navList', key: 'navList6' },
-				React.createElement(
-					'a',
-					{ href: '#posts' },
-					'POSTS'
-				)
-			));
+			// links.push(<li className = "navList" key = {'navList6'}><a href = "#posts">POSTS</a></li>);	
 		}
 
 		return React.createElement(
@@ -34518,34 +34502,36 @@ module.exports = React.createClass({
 	displayName: 'exports',
 
 	getInitialState: function getInitialState() {
-		return { 'posts': [] };
+		return { 'post': null };
 	},
 
 	componentWillMount: function componentWillMount(e) {
 		var _this = this;
 
+		console.log(this.props.postId);
 		var postsQuery = new Parse.Query(PostsModel);
-		postsQuery.descending('createdAt').find().then(function (posts) {
-			_this.setState({ posts: posts });
+		postsQuery.get(this.props.postId).then(function (post) {
+			console.log(post.get('Title'));
+			_this.setState({ post: post });
 		});
 	},
 
 	render: function render() {
-		var allPosts = this.state.posts.map(function (post) {
-			var prefix = '#posts';
-			var url = prefix + post.id;
-			var datePosted = '' + post.get('createdAt');
+		if (this.state.post === null) {
 			return React.createElement(
-				'a',
-				{ className: 'postsList', href: url, key: post.id },
-				React.createElement(PostsRowComponent, { post: post }),
-				React.createElement(
-					'span',
-					null,
-					datePosted
-				)
+				'div',
+				null,
+				'Loading'
 			);
-		});
+		}
+		// var allPosts = this.state.posts.map(function(post) {
+		// 	var prefix = '#posts/:id';
+		// 	var url = prefix + post.id;
+		// 	var datePosted = `${post.get('createdAt')}`;
+		// 	// return <a href="#testtest">test123</a>;
+		// 	return <a className = "postsList" href = {url} key = {post.id}><PostsRowComponent post = {post}/>
+		// 		   <form>{datePosted}</form></a>
+		// });
 
 		return React.createElement(
 			'div',
@@ -34562,7 +34548,7 @@ module.exports = React.createClass({
 			React.createElement(
 				'div',
 				{ clasName: 'postsList' },
-				allPosts
+				React.createElement(PostsRowComponent, { post: this.state.post })
 			)
 		);
 	}
@@ -34708,12 +34694,18 @@ module.exports = React.createClass({
 
 	render: function render() {
 		var allPosts = this.state.posts.map(function (post) {
-			var prefix = '#viewPosts';
+			var prefix = '#posts/';
 			var url = prefix + post.id;
+			var datePosted = '' + post.get('createdAt');
 			return React.createElement(
 				'a',
 				{ className: 'postLink', href: url, key: post.id },
-				React.createElement(ViewPostsRowComponent, { post: post })
+				React.createElement(ViewPostsRowComponent, { post: post }),
+				React.createElement(
+					'form',
+					null,
+					datePosted
+				)
 			);
 		});
 
@@ -34731,25 +34723,17 @@ module.exports = React.createClass({
 				React.createElement(
 					'h3',
 					{ className: 'viewPostsHeader2' },
-					'The most recent ones are at the top. Click on any of them to be taken to the post.'
+					'The most recent ones are at the top. Click on any of them to be taken to the full post.'
 				),
 				React.createElement(
 					'div',
-					{ className: 'viewPostsList', onClick: this.onPostClicked },
+					{ className: 'postLink' },
 					allPosts
 				)
 			)
 		);
-	},
-
-	onPostClicked: function onPostClicked(e) {
-		var _this2 = this;
-
-		e.preventDefault();
-		success: (function (u) {
-			_this2.props.router.navigate('posts', { trigger: true });
-		});
 	}
+
 });
 
 },{"../models/PostsModel":185,"./ViewPostsRowComponent":183,"backbone":1,"react":174,"react-dom":18}],183:[function(require,module,exports){
@@ -34770,6 +34754,16 @@ module.exports = React.createClass({
 				'div',
 				{ className: 'viewPostsList' },
 				this.props.post.get('Title')
+			),
+			React.createElement(
+				'div',
+				{ className: 'viewPostsList' },
+				this.props.post.get('Category')
+			),
+			React.createElement(
+				'div',
+				{ className: 'viewPostsList' },
+				this.props.post.get('Body').substring(0, 140) + '...'
 			)
 		);
 	}
@@ -34803,7 +34797,8 @@ var Router = Backbone.Router.extend({
 		'register': 'register',
 		'post': 'post',
 		'viewPosts': 'viewPosts',
-		'posts': 'posts',
+		// 'viewFullPost/:postId': 'viewFullPost',
+		'posts/:id': 'posts',
 		'logout': 'logout'
 	},
 
@@ -34836,9 +34831,13 @@ var Router = Backbone.Router.extend({
 		ReactDOM.render(React.createElement(ViewPostsComponent, { router: this }), app);
 	},
 
-	posts: function posts() {
-		ReactDOM.render(React.createElement(PostsComponent, { router: this }), app);
+	posts: function posts(id) {
+		ReactDOM.render(React.createElement(PostsComponent, { postId: id }), app);
 	}
+
+	// posts: function() {
+	// 	ReactDOM.render(<PostsComponent router = {this} />, app);
+	// }
 });
 
 var r = new Router();

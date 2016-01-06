@@ -95,22 +95,19 @@ a.postsList {
   color: #fff;
   text-align: center; }
 
-a.postsList:hover {
-  color: orange;
-  text-decoration: none; }
-
-span {
+form {
   margin: 0 auto;
   display: block;
   text-align: center;
-  padding-bottom: 2em; }
+  margin-bottom: 2em;
+  color: orange; }
+
+section {
+  text-align: center;
+  color: orange; }
 
 .viewPostsComponent div.viewPostsList {
-  color: #fff;
   text-align: center; }
-
-.viewPostsComponent div.viewPostsList:hover {
-  color: orange; }
 
 .viewPostsComponent .viewPostsHeader1 {
   color: #fff;
@@ -120,6 +117,13 @@ span {
   color: #fff;
   text-align: center;
   margin-bottom: 2em; }
+
+.viewPostsComponent a.postLink {
+  color: #fff; }
+
+.viewPostsComponent a.postLink:hover {
+  color: orange;
+  text-decoration: none; }
 
 .registerComponent .registerHeader {
   text-align: center;
