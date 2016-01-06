@@ -25,7 +25,6 @@ var Router = Backbone.Router.extend({
 		'register': 'register',
 		'post': 'post',
 		'viewPosts': 'viewPosts',
-		// 'viewFullPost/:postId': 'viewFullPost',
 		'posts/:id': 'posts',
 		'logout': 'logout'
 	},
@@ -64,9 +63,6 @@ var Router = Backbone.Router.extend({
 		ReactDOM.render(<PostsComponent postId = {id}/>, app);
 	}
 
-	// posts: function() {
-	// 	ReactDOM.render(<PostsComponent router = {this} />, app);
-	// }
 });
 
 var r = new Router();

@@ -22,16 +22,8 @@ module.exports = React.createClass({
 
 	render: function() {
 		if(this.state.post === null) {
-			return <div>Loading</div>
+			return <div>Loading...</div>
 		}
-		// var allPosts = this.state.posts.map(function(post) {
-		// 	var prefix = '#posts/:id';
-		// 	var url = prefix + post.id;
-		// 	var datePosted = `${post.get('createdAt')}`;
-		// 	// return <a href="#testtest">test123</a>;
-		// 	return <a className = "postsList" href = {url} key = {post.id}><PostsRowComponent post = {post}/>
-		// 		   <form>{datePosted}</form></a>
-		// });
 
 		return (
 			<div className = "col-sm-12">
@@ -39,7 +31,7 @@ module.exports = React.createClass({
 					<h1 className = "postsHeader1">These are all of the posts.</h1>
 				</div>
 				<div clasName = "postsList">
-				<PostsRowComponent post = {this.state.post}/>
+					<PostsRowComponent post = {this.state.post}/>
 				</div>
 			</div>
 		);
